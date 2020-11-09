@@ -4,7 +4,7 @@ jobs:
   test-elixir:
     runs-on: ubuntu-latest
     container:
-      image: hexpm/elixir:${{ matrix.elixir }}-erlang-${{ matrix.otp }}-alpine-3.12.0
+      image: hexpm/elixir:${{ matrix.elixir }}-erlang-${{ matrix.otp }}-alpine-${{ matrix.alpine }}
       env:
         ELIXIR_ASSERT_TIMEOUT: 2000
 
@@ -14,14 +14,19 @@ jobs:
         include:
           - elixir: 1.9.4
             otp: 20.3.8.26
+            alpine: 3.12.0
           - elixir: 1.10.4
-            otp: 23.1.1
-          - elixir: 1.11.0
+            otp: 23.1.2
+            alpine: 3.12.1
+          - elixir: 1.11.2
             otp: 21.3.8.18
-          - elixir: 1.11.0
-            otp: 23.1.1
+            alpine: 3.12.0
+          - elixir: 1.11.2
+            otp: 23.1.2
+            alpine: 3.12.1
+            
     steps:
-      - uses: actions/checkout@v2.3.1
+      - uses: actions/checkout@v2
       - name: Install Dependencies
         run: |
           mix local.rebar --force
@@ -33,7 +38,7 @@ jobs:
   integration-test-elixir:
     runs-on: ubuntu-latest
     container:
-      image: hexpm/elixir:${{ matrix.elixir }}-erlang-${{ matrix.otp }}-alpine-3.12.0
+      image: hexpm/elixir:${{ matrix.elixir }}-erlang-${{ matrix.otp }}-alpine-${{ matrix.alpine }}
       env:
         ELIXIR_ASSERT_TIMEOUT: 2000
     services:
@@ -62,10 +67,12 @@ jobs:
         include:
           - elixir: 1.11.1
             otp: 21.3.8.18
+            alpine: 3.12.0
           - elixir: 1.11.1
-            otp: 23.1.1
+            otp: 23.1.2
+            alpine: 3.12.1
     steps:
-      - uses: actions/checkout@v2.3.1
+      - uses: actions/checkout@v2
       - name: Install Dependencies
         run: |
           mix local.rebar --force
@@ -89,20 +96,20 @@ jobs:
   npm_test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2.3.1
-      - uses: actions/setup-elixir@v1.3.0
+      - uses: actions/checkout@v2
+      - uses: actions/setup-elixir@v1
         with:
-          otp-version: 23.0.3
-          elixir-version: 1.10.4
+          otp-version: 23.1.2
+          elixir-version: 1.11.2
       - name: Install Dependencies
         run: |
           mix local.rebar --force
           mix local.hex --force
           mix deps.get
       - name: Setup Node.js
-        uses: actions/setup-node@v2.1.1
+        uses: actions/setup-node@v2.1.2
         with:
-          node-version: 12.16
+          node-version: '14.x'
       - name: npm install and test
         run: |
           cd assets
