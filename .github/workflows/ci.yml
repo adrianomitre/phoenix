@@ -4,7 +4,7 @@ jobs:
   test-elixir:
     runs-on: ubuntu-latest
     container:
-      image: hexpm/elixir:${{ matrix.elixir }}-erlang-${{ matrix.otp }}-alpine-3.12.0
+      image: hexpm/elixir:${{ matrix.elixir }}-erlang-${{ matrix.otp }}-alpine-3.12.1
       env:
         ELIXIR_ASSERT_TIMEOUT: 2000
 
@@ -33,7 +33,7 @@ jobs:
   integration-test-elixir:
     runs-on: ubuntu-latest
     container:
-      image: hexpm/elixir:${{ matrix.elixir }}-erlang-${{ matrix.otp }}-alpine-3.12.0
+      image: hexpm/elixir:${{ matrix.elixir }}-erlang-${{ matrix.otp }}-alpine-3.12.1
       env:
         ELIXIR_ASSERT_TIMEOUT: 2000
     services:
